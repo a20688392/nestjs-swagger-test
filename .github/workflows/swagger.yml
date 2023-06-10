@@ -45,7 +45,7 @@ jobs:
         env:
           SWAGGERHUB_API_KEY: ${{ secrets.SWAGGERHUB_API_KEY }}
       - name: Upload File
-        if: github.ref !== 'refs/heads/main'
+        if: github.ref != 'refs/heads/main'
         uses: actions/upload-artifact@v2
         with:
           name: swagger-spec
