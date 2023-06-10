@@ -109,6 +109,7 @@ jobs:
         env:
           SWAGGERHUB_API_KEY: ${{ secrets.SWAGGERHUB_API_KEY }}
 
+      # 測試
       - name: Generate Swagger JSON
         if: github.ref != 'refs/heads/main'
         run: yarn generate-swagger-json
