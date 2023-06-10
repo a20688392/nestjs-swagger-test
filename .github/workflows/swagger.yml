@@ -7,46 +7,46 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-    - name: Get yarn cache directory path
-      id: yarn-cache-dir-path
-      run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
 
-    - uses: actions/cache@v3
-      id: yarn-cache
-      with:
-        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-yarn-
+      - uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
 
-    - name: Setup node and cache dependencies
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16
-        cache: "yarn"
+      - name: Setup node and cache dependencies
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: "yarn"
 
-    - name: Install Dependencies
-      run: yarn install
+      - name: Install Dependencies
+        run: yarn install
 
-    - name: Nest Build
-      run: yarn build
+      - name: Nest Build
+        run: yarn build
 
-    - name: Install swaggerhub-cli
-      run: yarn global add swaggerhub-cli
+      - name: Install swaggerhub-cli
+        run: yarn global add swaggerhub-cli
 
-    - name: Upload on Swaggerhub
-      if: github.ref == 'refs/heads/main'
-      run: |
-        export API_VERSION=1.0.12 && \
-        swaggerhub api:create "a20688392/Cosphr_test/$API_VERSION"
-      env:
-        SWAGGERHUB_API_KEY: ${{ secrets.SWAGGERHUB_API_KEY }}
-    - name: Upload File
-      if: github.ref == 'refs/heads/main'
-      uses: actions/upload-artifact@v2
-      with:
-        name: swagger-spec
-        path: swagger-spec.json
+      - name: Upload on Swaggerhub
+        if: github.ref == 'refs/heads/main'
+        run: |
+          export API_VERSION=1.0.12 && \
+          swaggerhub api:create "a20688392/Cosphr_test/$API_VERSION"
+        env:
+          SWAGGERHUB_API_KEY: ${{ secrets.SWAGGERHUB_API_KEY }}
+      - name: Upload File
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v2
+        with:
+          name: swagger-spec
+          path: swagger-spec.json
