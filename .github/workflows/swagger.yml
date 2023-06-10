@@ -31,8 +31,10 @@ jobs:
     - name: Install Dependencies
       run: yarn install
 
+    - name: Nest Build
+      run: yarn build
+
     - run: yarn global add swaggerhub-cli
-    # Run other automation here, such as tests or standardization checks
     if: github.ref == 'refs/heads/main'
       - name: Upload on Swaggerhub
       - run: |
