@@ -68,7 +68,7 @@ jobs:
       - name: Unit Test
         run: yarn test
 
-   generate-swagger-demo:
+  generate-swagger-demo:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
