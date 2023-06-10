@@ -14,7 +14,7 @@ async function generateSwaggerJson() {
 
   const document = SwaggerModule.createDocument(app, config);
 
-  fs.writeFileSync("swagger.json", JSON.stringify(document));
+  fs.writeFileSync("swagger-docs.json", JSON.stringify(document));
 
   await app.close();
 }
