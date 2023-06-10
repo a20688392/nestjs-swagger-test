@@ -48,5 +48,5 @@ jobs:
         if: github.ref != 'refs/heads/main'
         uses: actions/upload-artifact@v2
         with:
-          name: swagger-spec
-          path: swagger-spec.json
+          name: swagger-docs
+          path: swagger-docs.json
