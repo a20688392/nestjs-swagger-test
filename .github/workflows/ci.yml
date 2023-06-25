@@ -101,14 +101,20 @@ jobs:
       - name: Install swaggerhub-cli
         run: yarn global add swaggerhub-cli
 
+      - name: Read package.json
+        uses: tyankatsu0105/read-package-version-actions@v1
+        id: package-version
+
       - name: Generate Swagger JSON
         if: github.ref != 'refs/heads/main'
         run: yarn generate-swagger-json
-
+        env:
+          APP_SWAGGER_Version: ${{ steps.package-version.outputs.version }}
 
       - name: Upload on Swaggerhub
         if: github.ref != 'refs/heads/main'
         run: |
-          swaggerhub api:update a20688392/Cosphr_test  --file swagger-docs.json --visibility public
+          swaggerhub api:publish "a20688392/Cosphr_test/$API_VERSION" && \
+          swaggerhub api:setdefault "smizelldemo/webinar/$API_VERSION"
         env:
           SWAGGERHUB_API_KEY: ${{ secrets.SWAGGERHUB_API_KEY }}
