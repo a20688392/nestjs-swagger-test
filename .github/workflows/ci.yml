@@ -105,6 +105,7 @@ jobs:
         if: github.ref != 'refs/heads/main'
         run: yarn generate-swagger-json
 
+
       - name: Upload on Swaggerhub
         if: github.ref != 'refs/heads/main'
         run: |
