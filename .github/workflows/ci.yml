@@ -114,7 +114,7 @@ jobs:
       - name: Upload on Swaggerhub
         if: github.ref != 'refs/heads/main'
         run: |
-          swaggerhub api:publish "a20688392/Cosphr_test/$API_VERSION" && \
-          swaggerhub api:setdefault "smizelldemo/webinar/$API_VERSION"
+          swaggerhub api:publish "a20688392/Cosphr_test/${{ steps.package-version.outputs.version }}" && \
+          swaggerhub api:setdefault "a20688392/Cosphr_test/${{ steps.package-version.outputs.version }}"
         env:
           SWAGGERHUB_API_KEY: ${{ secrets.SWAGGERHUB_API_KEY }}
