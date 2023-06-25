@@ -101,22 +101,13 @@ jobs:
       - name: Install swaggerhub-cli
         run: yarn global add swaggerhub-cli
 
-      - name: Upload on Swaggerhub
-        if: github.ref == 'refs/heads/main'
-        run: |
-          export API_VERSION=1.0.12 && \
-          swaggerhub api:create "a20688392/Cosphr_test/$API_VERSION"
-        env:
-          SWAGGERHUB_API_KEY: ${{ secrets.SWAGGERHUB_API_KEY }}
-
-      # 測試
       - name: Generate Swagger JSON
         if: github.ref != 'refs/heads/main'
         run: yarn generate-swagger-json
 
-      - name: Upload File
+      - name: Upload on Swaggerhub
         if: github.ref != 'refs/heads/main'
-        uses: actions/upload-artifact@v3
-        with:
-          name: swagger-docs
-          path: swagger-docs.json
+        run: |
+          swaggerhub api:update "a20688392/Cosphr_test  --file swagger-docs.json --visibility public"
+        env:
+          SWAGGERHUB_API_KEY: ${{ secrets.SWAGGERHUB_API_KEY }}
